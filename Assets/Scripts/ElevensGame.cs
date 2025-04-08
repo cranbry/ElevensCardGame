@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-public class ElevensGame
+public class ElevensGame 
 {
     private Deck deck;
     private Board board;

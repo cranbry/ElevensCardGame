@@ -19,12 +19,36 @@ public class GameManager : MonoBehaviour
 
     private ElevensGame game;
 
+    // list to keep track of all car objects on the screen:
     private List<CardController> cardControllers = new List<CardController>();
+
+    // list of cards currently selected
     private List<int> selectedPositions = new List<int>();
 
-    private void Awake() { }
+    // initializing awake and start:
+    private void Awake()
+    {
+        // making sure only 1 gameManager exists
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    private void Start() { }
+    private void Start()
+    {
+        // calls to intialize game
+        InitializeGame();
+
+        // button event listener
+        submitButton.onClick.AddListener(OnSubmitSelection);
+        newGameButton.onClick.AddListener(StartNewGame);
+
+    }
 
     private void Update() { }
 

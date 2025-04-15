@@ -74,7 +74,20 @@ public class GameManager : MonoBehaviour
         cardControllers.Clear();
     }
 
-    private void Update() { }
+    private void CreateCardObject()
+    {
+
+    }
+    private void UpdateUI()
+    {
+        // update score:
+        scoreText.text = "Score: " + game.score;
+
+        // update deck count
+        deckCountText.text = "Cards: " + game.deckCount;
+
+        // showing game over if needed:        
+    }
 
 
 

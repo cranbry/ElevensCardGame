@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using UnityEngine;
-using System.Threading.Tasks;
-
 
 public class Deck
 {
-    List<Card> cards = new List<Card>();
+    private List<Card> cards = new List<Card>();
+
     //Deck Constructor
     public Deck()
     {
@@ -24,12 +19,21 @@ public class Deck
         }
     }
 
-    //Implement a property to get Cards
+    // property to get access Cards
     public List<Card> Cards
     {
         get
         {
             return cards;
+        }
+    }
+
+    // returns number of remaining cards in the deck
+    private int RemainingCards
+    {
+        get
+        {
+            return cards.Count;
         }
     }
 
@@ -50,34 +54,29 @@ public class Deck
         }
     }
 
-    public Card DealCard()
-    {
-        return TakeTopCard();
-    }
-
     //Shuffle Method
     public void Shuffle()
     {
         // random number generator:
-        Random rndmCard = new Random();
+        Random rngCard = new Random();
 
-        // list to hold shuffeled deck:
-        List<Card> suffeledDeck = new List<Card>();
+        // list to hold shuffled deck:
+        List<Card> shuffledDeck = new List<Card>();
 
         while (cards.Count > 0)
         {
             // taking random card from the original deck
-            int rndmIndex = rndmCard.Next(cards.Count);
+            int rngIndex = rngCard.Next(cards.Count);
 
-            // taking the random card and adding it to the shuffeled deck
-            Card selectedCard = cards[rndmIndex];
-            suffeledDeck.Add(selectedCard);
+            // taking the random card and adding it to the shuffled deck
+            Card selectedCard = cards[rngIndex];
+            shuffledDeck.Add(selectedCard);
 
             // removing that random card from the original deck
-            cards.RemoveAt(rndmIndex);
-
+            cards.RemoveAt(rngIndex);
         }
-
+        // updating original deck with shuffled deck
+        cards = shuffledDeck;
     }
 
     //Cut method
@@ -96,10 +95,6 @@ public class Deck
         cards.AddRange(topPortion);
     }
 
-    public int getRemainingCards()
-    {
-        return cards.Count;
-    }
     public bool isEmpty()
     {
         return cards.Count == 0;

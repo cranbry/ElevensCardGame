@@ -50,6 +50,30 @@ public class GameManager : MonoBehaviour
 
     }
 
+    // creating new game using elevensgame class:
+    private void InitializeGame()
+    {
+        game = new ElevensGame();
+        // should:
+        // clear board
+        // update UI
+        // create the card object
+    }
+
+    // removing all existing cards from the screen and clears selection
+    private void ClearBoard()
+    {
+
+        selectedPositions.Clear();
+
+        foreach (CardController card in cardControllers)
+        {
+            Destroy(card.GameObject);
+        }
+
+        cardControllers.Clear();
+    }
+
     private void Update() { }
 
 

@@ -1,29 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public class Card
 {
     //Fields, example: Rank rank;
     private Rank rank;
     private Suit suit;
-    private bool faceUp;
-    private int value;
+    private bool isFaceUp;
 
     //Card Constructor
     public Card(Suit suit, Rank rank)
     {
         this.suit = suit;
         this.rank = rank;
-        this.faceUp = false; // making cards start face down by default
-        this.value = CalculateValue(rank);
+        this.isFaceUp = false; // making cards start face down by default
     }
 
-    //Define properties for all above fields
-    //code example: public Suit Suit { get { return suit; } }
+    // properties for all above fields
     public Suit Suit
     {
         get
@@ -38,26 +30,30 @@ public class Card
             return rank;
         }
     }
-    public bool FaceUp
+    public bool IsFaceUp
     {
         get
         {
-            return faceUp;
+            return isFaceUp;
+        }
+    }
+
+    // get the value of the card
+    public int GetValue()
+    {
+        if (rank >= Rank.Jack) // for Jack, Queen, and King
+        {
+            return 10;
+        }
+        else
+        {
+            return rank + 1; // ace = 1, two = 2...
         }
     }
 
     public void FlipOver()
     {
-        // if face down then face up
-        if (faceUp == false)
-        {
-            faceUp = true;
-        }
-        // if face up then down
-        else
-        {
-            faceUp = false;
-        }
+        isFaceUp = !isFaceUp;
     }
 
 }

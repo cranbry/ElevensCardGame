@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehavior
 {
     public static GameManager Instance { get; private set; }
 
@@ -88,10 +88,5 @@ public class GameManager : MonoBehaviour
 
         // showing game over if needed:        
     }
-
-
-
-
-
 
 }

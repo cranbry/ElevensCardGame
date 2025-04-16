@@ -46,7 +46,7 @@ public class ElevensGame
         // check if selected cards are valid combination
         if (board.GetSelectedCards().Count >= 2)
         {
-            SelectinoProcess();
+            SelectionProcess();
         }
     }
 

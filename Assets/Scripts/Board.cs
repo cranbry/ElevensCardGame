@@ -93,5 +93,48 @@ public class Board
         // returns true if valid sum of 11
         return PAIR_SUM == selectedSum;
     }
+
+    // checking for J,K,Q
+    public bool IsJQKSet(List<int> selectedPositions)
+    {
+        bool hasJack = false;
+        bool hasQueen = false;
+        bool hasKing = false;
+
+        // checking for empty or invalid selection
+        if (selectedPositions == null || selectedPositions.Count != 3)
+        {
+            return false;
+        }
+
+        // checking each selected position
+        foreach (int position position in selectedPositions) {
+
+            // checking if positions in range
+            if (position < 0 || position >= cardsInPlay)
+            {
+                return false;
+            }
+
+            // checking card rank
+            Card card = cardsInPlay[position];
+
+            if (card.Rank == Rank.Jack)
+            {
+                hasJack = true;
+            }
+            else if (card.Rank == Rank.Queen)
+            {
+                hasQueen = true;
+            }
+            else if (card.Rank == Rank.King)
+            {
+                hasKing = true;
+            }
+        }
+
+        // all have to be true
+        return hasJack && hasQueen && hasKing;
+    }
 }
 

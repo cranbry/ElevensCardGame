@@ -32,5 +32,12 @@ public class ElevensGame
         get { return isGameOver || gameBoard.IsGameOver(); }
     }
 
+    public bool MakeMove(List<int> selectedPositions) { 
+        if (isGameOver) {
+            return false;
+        }
+
+    }
+
 }
 

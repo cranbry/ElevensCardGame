@@ -65,4 +65,33 @@ public class Board
         return true;
     }
 
+    // checking if selected cards add up to the appropriate sum 11
+    public bool IsSumOfEleven(List<int> selectedPositions)
+    {
+        int firstSelected = selectedPositions[0];
+        int secondSelected = selectedPositions[1];
+        int selectedSum = 0;
+
+        // checking for empty or invalid selection
+        if (selectedPositions == null || selectedPositions.Count != 2)
+        {
+            return false;
+        }
+        // checking if positions in range
+        if ((firstSelected < 0 || firstSelected >= cardsInPlay.Count) ||
+        (secondSelected < 0 || secondSelected >= cardsInPlay.Count))
+        {
+
+            return false;
+        }
+
+        Card firstCard = cardsInPlay[firstSelected];
+        Card secondCard = cardsInPlay[secondSelected];
+
+        selectedSum = firstCard.GetValue() + secondCard.GetValue();
+
+        // returns true if valid sum of 11
+        return PAIR_SUM == selectedSum;
+    }
 }
+

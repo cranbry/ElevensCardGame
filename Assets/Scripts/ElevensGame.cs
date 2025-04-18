@@ -64,5 +64,18 @@ public class ElevensGame
         return false;
     }
 
+    // resetting and restarting a new game
+    public void NewGame()
+    {
+        gameBoard = new Board();
+        score = 0;
+        isGameOver = false;
+    }
+
+    // getting number of cards remaining in the deck
+    public int GetRemainingCards()
+    {
+        return gameBoard.RemainingCards;
+    }
 }
 

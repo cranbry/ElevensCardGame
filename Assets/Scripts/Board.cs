@@ -136,5 +136,22 @@ public class Board
         // all have to be true
         return hasJack && hasQueen && hasKing;
     }
+
+    // checking if selected cards are valid pairs can be sum of 11 or JQK
+    public bool isValidSelection(List<int> selectedPositions)
+    {
+        // for 2 cards we check for sum of 11
+        if (selectedPositions != null && selectedPositions.Count == 2)
+        {
+            return IsSumOfEleven(selectedPositions);
+        }
+        // for 3 cards we check for JQK set
+        else if (selectedPositions != null && selectedPositions.Count == 3)
+        {
+            return IsJQKSet(selectedPositions);
+        }
+
+        return false;
+    }
 }
 

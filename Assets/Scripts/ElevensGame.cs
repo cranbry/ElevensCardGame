@@ -17,26 +17,51 @@ public class ElevensGame
     // accessing the game board
     public Board GameBoard
     {
-        get { return gameBoard; }
+        get
+        {
+            return gameBoard;
+        }
     }
 
     // the current score
     public int Score
     {
-        get { return score; }
+        get
+        {
+            return score;
+        }
     }
 
     // the game is over
     public bool IsGameOver
     {
-        get { return isGameOver || gameBoard.IsGameOver(); }
+        get
+        {
+            return isGameOver || gameBoard.IsGameOver();
+        }
     }
 
-    public bool MakeMove(List<int> selectedPositions) { 
-        if (isGameOver) {
+    public bool MakeMove(List<int> selectedPositions)
+    {
+        if (isGameOver)
+        {
             return false;
         }
+        if (gameBoard.isValidSelection(selectedPositions))
+        {
+            // when valid move then remove and replace the card and update score
+            gameBoard.RemoveAndReplace(selectedPositions);
 
+            // update score +1 point
+            score++;
+
+            // checking if game is over
+            isGameOver = gameBoard.IsGameOver();
+
+            return true;
+        }
+
+        return false;
     }
 
 }

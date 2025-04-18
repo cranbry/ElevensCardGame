@@ -3,49 +3,33 @@ using System.Collections.Generic;
 
 public class ElevensGame
 {
-    private Deck deck;
-    private Board board;
-    private int loss_count;
-    private int win_count;
+    private Board gameBoard;
+    private int score;
+    private bool isGameOver;
+
     // constructor to initialize wins and losses
     public ElevensGame()
     {
         win_count = 0;
         loss_count = 0;
     }
-    public void StarNewGame()
+
+    // accessing the game board
+    public Board GameBoard
     {
-        // creating new deck and shuffling it
-        deck = new Deck;
-        deck.Shuffle();
-
-        // creating new board
-        board = new Board();
-
-        // dealing first board of cards
-        for (int i = 0; i < 9; i++)
-        {
-            Card card = deck.DealCard();
-
-            if (card != null)
-            {
-                // turn card face up
-                card.FlipOver();
-
-                // adding it to the board
-                board.replaceSelectedCard(i, card);
-            }
-        }
+        get { return gameBoard; }
     }
-    public void selectedCard()
-    {
-        Card selectedCard = board.Select(position);
 
-        // check if selected cards are valid combination
-        if (board.GetSelectedCards().Count >= 2)
-        {
-            SelectionProcess();
-        }
+    // the current score
+    public int Score
+    {
+        get { return score; }
+    }
+
+    // the game is over
+    public bool IsGameOver
+    {
+        get { return isGameOver || gameBoard.IsGameOver(); }
     }
 
 }

@@ -23,15 +23,46 @@ public class Board
         get { return cardsInPlay; }
     }
 
-    private void DealCards()
+    // get remaining cards in deck
+    public int RemainingCards
     {
-
+        get { return deck.RemainingCards; }
     }
 
+    // deal first cards to the board
+    public void DealCards()
+    {
+        // Clear any existing cards
+        cardsInPlay.Clear();
+
+        // deal cards until we have NUM_CARDS_IN_PLAY or the deck is empty
+        while (cardsInPlay.Count < NUM_CARDS_IN_PLAY && deck.RemainingCards > 0)
+        {
+            Card card = deck.TakeTopCard();
+            if (card != null)
+            {
+                card.FlipOver(); // makes cards face up when on the board
+                cardsInPlay.Add(card);
+            }
+        }
+    }
+
+    // dealing replacement cards to specific positions
     public bool ReplaceCard(int position)
     {
+        if (position < 0 || position >= cardsInPlay.Count)
+            return false;
 
+        if (deck.RemainingCards == 0)
+            return false;
+
+        Card newCard = deck.TakeTopCard();
+        if (newCard == null)
+            return false;
+
+        newCard.FlipOver(); // makes the card face up
+        cardsInPlay[position] = newCard;
+        return true;
     }
 
-    
 }

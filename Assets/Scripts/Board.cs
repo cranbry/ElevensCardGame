@@ -161,7 +161,16 @@ public class Board
         {
             return false;
         }
-        // To Be Continued... 
+        // sorting positions in desc order so it doesnt shift indexes when removing
+        positions.Sort();
+        positions.Reverse();
+
+        foreach (int position in positions)
+        {
+            ReplaceCard(position);
+        }
+
+        return true;
     }
 
     // checking if game is joever
@@ -192,7 +201,6 @@ public class Board
         }
 
         // checking all the possible selections
-
         foreach (List<int> selections in possibleSelections)
         {
             if (isValidSelection(selections))

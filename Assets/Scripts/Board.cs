@@ -153,5 +153,63 @@ public class Board
 
         return false;
     }
+
+    // removes cards from the selected positions and replace with new cards 
+    public bool RemoveAndReplace(List<int> positions)
+    {
+        if (!isValidSelection(positions))
+        {
+            return false;
+        }
+        // To Be Continued... 
+    }
+
+    // checking if game is joever
+    public bool IsGameOver()
+    {
+        // list for checking if there are any valid selections on the board
+        List<int> possibleSelections = new List<List<int>>();
+
+        // generating all possible pairs example -> (0,1) - (0,2).. (2,1)...
+        for (int i = 0; i < cardsInPlay.Count; i++)
+        {
+            for (int j = i + 1; j < cardsInPlay.Count; j++)
+            {
+                possibleSelections.Add(new List<int> { i, j });
+            }
+        }
+
+        // generating all possible triplets same idea as pairs but checking for 3 card pairs
+        for (int i = 0; i < cardsInPlay.Count; i++)
+        {
+            for (int j = i + 1; j < cardsInPlay.Count; j++)
+            {
+                for (int k = j + 1; k < cardsInPlay.Count; k++)
+                {
+                    possibleSelections.Add(new List<int> { i, j, k });
+                }
+            }
+        }
+
+        // checking all the possible selections
+
+        foreach (List<int> selections in possibleSelections)
+        {
+            if (isValidSelection(selections))
+            {
+                // dont end game
+                return false;
+            }
+        }
+
+        // if no more cards in the deck
+        if (deck.RemainingCards == 0)
+        {
+            return true;
+        }
+
+        // end game because no valid moves or cards in the deck
+        return true;
+    }
 }
 

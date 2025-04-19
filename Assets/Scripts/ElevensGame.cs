@@ -48,7 +48,7 @@ public class ElevensGame
         {
             return false;
         }
-        if (gameBoard.isValidSelection(selectedPositions))
+        if (gameBoard.IsValidSelection(selectedPositions))
         {
             // when valid move then remove and replace the card and update score
             gameBoard.RemoveAndReplace(selectedPositions);

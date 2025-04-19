@@ -19,21 +19,17 @@ public class Deck
         }
     }
 
+    public int RemainingCards
+    {
+        get { return cards.Count; }
+    }
+
     // property to get access Cards
     public List<Card> Cards
     {
         get
         {
             return cards;
-        }
-    }
-
-    // returns number of remaining cards in the deck
-    private int RemainingCards
-    {
-        get
-        {
-            return cards.Count;
         }
     }
 
@@ -93,11 +89,6 @@ public class Deck
         cards.RemoveRange(0, index);
         // adding the portion back to the back
         cards.AddRange(topPortion);
-    }
-
-    public bool isEmpty()
-    {
-        return cards.Count == 0;
     }
 }
 

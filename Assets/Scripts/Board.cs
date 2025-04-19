@@ -9,7 +9,7 @@ public class Board
     private List<Card> cardsInPlay = new List<Card>();
     private Deck deck;
 
-    // Constructor - Initialize the board with a new shuffled deck
+    // constructor lil bro initializes the board with a new shuffled deck
     public Board()
     {
         deck = new Deck();
@@ -17,37 +17,37 @@ public class Board
         DealCards();
     }
 
-    // Property to access cards in play
+    // prop to access cards in play
     public List<Card> CardsInPlay
     {
         get { return cardsInPlay; }
     }
 
-    // Property to get remaining cards in deck
+    // prop to get remaining cards in deck
     public int RemainingCards
     {
-        get { return deck.RemainingCards; }
+        get { return deck.RemainingCards; } // accessing cards property ->> was issue DONT FORGET TO CHANGE
     }
 
-    // Deal initial cards to the board
+    // dealing initial cards to the board
     public void DealCards()
     {
-        // Clear any existing cards
+        // clearing existing cards
         cardsInPlay.Clear();
 
-        // Deal cards until we have NUM_CARDS_IN_PLAY or the deck is empty
+        // dealing cards until we have this under or the deck is empty
         while (cardsInPlay.Count < NUM_CARDS_IN_PLAY && deck.RemainingCards > 0)
         {
             Card card = deck.TakeTopCard();
             if (card != null)
             {
-                card.FlipOver(); // Make cards face up when on the board
+                card.FlipOver(); // making cards face up when on the board
                 cardsInPlay.Add(card);
             }
         }
     }
 
-    // Deal a replacement card to a specific position
+    // dealing replacement card to pos
     public bool ReplaceCard(int position)
     {
         if (position < 0 || position >= cardsInPlay.Count)
@@ -60,37 +60,37 @@ public class Board
         if (newCard == null)
             return false;
 
-        newCard.FlipOver(); // Make the card face up
+        newCard.FlipOver(); // making the card face up
         cardsInPlay[position] = newCard;
         return true;
     }
 
-    // Check if the selected positions form a pair that sums to 11
+    // checking if the selected positions are sum 11
     public bool IsPairSumEleven(List<int> selectedPositions)
     {
-        // Need exactly 2 cards for a sum pair
+        // needs  2 cards for a sum 
         if (selectedPositions == null || selectedPositions.Count != 2)
             return false;
 
         int firstPosition = selectedPositions[0];
         int secondPosition = selectedPositions[1];
 
-        // Validate positions are in range
+        // validatng positions are in range
         if (firstPosition < 0 || firstPosition >= cardsInPlay.Count ||
             secondPosition < 0 || secondPosition >= cardsInPlay.Count)
             return false;
 
-        // Get the cards and check their sum
+        // getting cards and check and sum
         Card firstCard = cardsInPlay[firstPosition];
         Card secondCard = cardsInPlay[secondPosition];
 
         return firstCard.GetValue() + secondCard.GetValue() == PAIR_SUM;
     }
 
-    // Check if the selected positions form a J-Q-K set
+    // checking if the selected positions are JQK 
     public bool IsJQKSet(List<int> selectedPositions)
     {
-        // Need exactly 3 cards for a J-Q-K set
+        // needs  3 cards for a JQK
         if (selectedPositions == null || selectedPositions.Count != 3)
             return false;
 
@@ -98,14 +98,14 @@ public class Board
         bool hasQueen = false;
         bool hasKing = false;
 
-        // Check each selected position
+        // checking each selected position
         foreach (int position in selectedPositions)
         {
-            // Validate position is in range
+            // validating position is in range
             if (position < 0 || position >= cardsInPlay.Count)
                 return false;
 
-            // Check card rank
+            // checking card rank
             Card card = cardsInPlay[position];
 
             if (card.Rank == Rank.Jack) hasJack = true;
@@ -113,19 +113,19 @@ public class Board
             if (card.Rank == Rank.King) hasKing = true;
         }
 
-        // Must have all three face cards
+        // needs to be all three face cards
         return hasJack && hasQueen && hasKing;
     }
 
-    // Check if the selected cards form a valid set (either pair sum of 11 or J,Q,K set)
+    // checking if the selected cards form a valid set 11 or JQK
     public bool IsValidSelection(List<int> selectedPositions)
     {
-        // For 2 cards, check for sum of 11
+        // 2 cards check for sum of 11
         if (selectedPositions != null && selectedPositions.Count == 2)
         {
             return IsPairSumEleven(selectedPositions);
         }
-        // For 3 cards, check for J,Q,K
+        // 3 cards check for JQK
         else if (selectedPositions != null && selectedPositions.Count == 3)
         {
             return IsJQKSet(selectedPositions);
@@ -134,13 +134,13 @@ public class Board
         return false;
     }
 
-    // Remove cards at the selected positions and replace with new cards from the deck
+    // remvoing cards at the selected positions and replace with new cards from the deck
     public bool RemoveAndReplace(List<int> positions)
     {
         if (!IsValidSelection(positions))
             return false;
 
-        // Sort positions in descending order to avoid index shifting when removing
+        // sortging positions in desc order to avoid index shifting when removing
         positions.Sort();
         positions.Reverse();
 
@@ -152,13 +152,13 @@ public class Board
         return true;
     }
 
-    // Check if the game is over (no valid moves possible)
+    // checking if the game is over (no valid moves possible)
     public bool IsGameOver()
     {
-        // First check if there are any valid moves on the current board
+        // we check if there are any valid moves on the current board
         List<List<int>> possibleSelections = new List<List<int>>();
 
-        // Generate all possible pairs
+        // then generate all possible pairs
         for (int i = 0; i < cardsInPlay.Count; i++)
         {
             for (int j = i + 1; j < cardsInPlay.Count; j++)
@@ -167,7 +167,7 @@ public class Board
             }
         }
 
-        // Generate all possible triplets
+        // generate all possible triplets
         for (int i = 0; i < cardsInPlay.Count; i++)
         {
             for (int j = i + 1; j < cardsInPlay.Count; j++)
@@ -179,16 +179,16 @@ public class Board
             }
         }
 
-        // Check each possible selection
+        // checking each possible selection
         foreach (List<int> selection in possibleSelections)
         {
             if (IsValidSelection(selection))
             {
-                return false; // Found a valid move, game not over
+                return false; // there is valid move dont end
             }
         }
 
-        // No valid moves on the board, game is over
+        // valid moves on the board are cooked game is over
         return true;
     }
 }

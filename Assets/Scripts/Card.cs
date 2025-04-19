@@ -2,7 +2,6 @@ using System;
 
 public class Card
 {
-    //Fields, example: Rank rank;
     private Rank rank;
     private Suit suit;
     private bool isFaceUp;
@@ -41,14 +40,12 @@ public class Card
     // get the value of the card
     public int GetValue()
     {
-        if (rank >= Rank.Jack) // for Jack, Queen, and King
-        {
+        int rankValue = (int)rank;
+
+        if (rankValue >= (int)global::Rank.Jack) // for Jack, Queen, and King // had to add explicit cast to int for comparison
             return 10;
-        }
-        else
-        {
-            return rank + 1; // ace = 1, two = 2...
-        }
+
+        return rankValue + 1; // ace = 1, two = 2...
     }
 
     public void FlipOver()
@@ -56,4 +53,9 @@ public class Card
         isFaceUp = !isFaceUp;
     }
 
+    // overriding ToString to debug why is NOT WORKINGGGGGGG Im slowly losing my mind
+    public override string ToString()
+    {
+        return $"{rank} of {suit}";
+    }
 }

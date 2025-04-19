@@ -10,8 +10,9 @@ public class ElevensGame
     // constructor to initialize wins and losses
     public ElevensGame()
     {
-        win_count = 0;
-        loss_count = 0;
+        gameBoard = new Board();
+        score = 0;
+        isGameOver = false;
     }
 
     // accessing the game board

@@ -1,18 +1,18 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameManager : MonoBehavior
+public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     [Header("Game References")]
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private Transform cardsContainer;
-    [SerializeField] private TextMeshProGUI scoreText;
-    [SerializeField] private TextMeshProGUI deckCountText;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text deckCountText;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button submitButton;
     [SerializeField] private Button newGameButton;
@@ -24,18 +24,12 @@ public class GameManager : MonoBehavior
     [SerializeField] private float cardSpacing = 10f;
     [SerializeField] private int gridColumns = 3;
 
-    private ElevensGame game;
-
-    // list to keep track of all car objects on the screen:
+    private ElevensGame elevensGame;
     private List<CardController> cardControllers = new List<CardController>();
-
-    // list of cards currently selected
     private List<int> selectedPositions = new List<int>();
 
-    // initializing awake and start:
     private void Awake()
     {
-        // making sure only 1 gameManager exists
         if (Instance == null)
         {
             Instance = this;
@@ -48,41 +42,39 @@ public class GameManager : MonoBehavior
 
     private void Start()
     {
-        // calls to intialize game
         InitializeGame();
 
-        // button event listener
+        // button event listeners
         submitButton.onClick.AddListener(OnSubmitSelection);
         newGameButton.onClick.AddListener(StartNewGame);
 
-        // disabling the submit button
+        // start with submit button disabled 
         submitButton.interactable = false;
     }
 
-    // creating new game using elevensgame class:
+    // initializing the game
     private void InitializeGame()
     {
-        game = new ElevensGame();
-        // should:
+        elevensGame = new ElevensGame(); // it was error here
         ClearBoard();
-        // update UI
-        // create the card object
+        CreateCardObjects();
+        UpdateUI();
     }
 
-    // removing all existing cards from the screen and clears selection
+    // clearing the game board
     private void ClearBoard()
     {
-
         selectedPositions.Clear();
 
         foreach (CardController card in cardControllers)
         {
-            Destroy(card.GameObject);
+            Destroy(card.gameObject);
         }
 
         cardControllers.Clear();
     }
 
+    // creating card objects based on the game board
     private void CreateCardObjects()
     {
         List<Card> cardsInPlay = elevensGame.GameBoard.CardsInPlay;
@@ -95,12 +87,12 @@ public class GameManager : MonoBehavior
             cardController.InitializeCard(cardsInPlay[i], i);
             cardControllers.Add(cardController);
 
-            // positioning the card in a grid layout
+            // position the card in a grid layout
             PositionCardInGrid(cardObject.GetComponent<RectTransform>(), i);
         }
     }
 
-    // for card position, made it a grid layout
+    // position a card in the grid layout
     private void PositionCardInGrid(RectTransform cardRect, int index)
     {
         int row = index / gridColumns;
@@ -113,20 +105,20 @@ public class GameManager : MonoBehavior
         cardRect.sizeDelta = new Vector2(cardWidth, cardHeight);
     }
 
-    // updating all the UI elements
+    // updating the UI stuff
     private void UpdateUI()
     {
-        // uptdating score
+        // updating score
         scoreText.text = "Score: " + elevensGame.Score.ToString();
 
         // updating deck count
         int remainingCards = elevensGame.GetRemainingCards();
         deckCountText.text = "Cards: " + remainingCards.ToString();
 
-        // shwoing game over when needed
+        // shwoing game over if needed
         gameOverPanel.SetActive(elevensGame.IsGameOver);
 
-        // to enable or desable submit button based on what was selected
+        // enable or disable submit button if selected
         submitButton.interactable = selectedPositions.Count == 2 || selectedPositions.Count == 3;
     }
 
@@ -137,7 +129,7 @@ public class GameManager : MonoBehavior
 
         if (selectedPositions.Contains(position))
         {
-            // deselcting the card
+            // deslecting the card
             selectedPositions.Remove(position);
             cardController.ToggleSelection();
         }
@@ -168,23 +160,23 @@ public class GameManager : MonoBehavior
         }
     }
 
-    // handling the submit button
+    // handling submit button click
     private void OnSubmitSelection()
     {
         if (elevensGame.MakeMove(selectedPositions))
         {
-            // successful move and updating board
+            // Move was successful -> updating the board
             RefreshBoard();
         }
         else
         {
-            // invalid move and making the cards deselected
+            // move was invalid move -> deselecting
             DeselectAllCards();
             UpdateUI();
         }
     }
 
-    // refreshing the board after a move
+    // refreshig the board after a move
     private void RefreshBoard()
     {
         ClearBoard();

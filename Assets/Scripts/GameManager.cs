@@ -17,6 +17,13 @@ public class GameManager : MonoBehavior
     [SerializeField] private Button submitButton;
     [SerializeField] private Button newGameButton;
 
+    // Card layout parameters
+    [Header("Card Layout")]
+    [SerializeField] private float cardWidth = 120f;
+    [SerializeField] private float cardHeight = 180f;
+    [SerializeField] private float cardSpacing = 10f;
+    [SerializeField] private int gridColumns = 3;
+
     private ElevensGame game;
 
     // list to keep track of all car objects on the screen:
@@ -48,6 +55,8 @@ public class GameManager : MonoBehavior
         submitButton.onClick.AddListener(OnSubmitSelection);
         newGameButton.onClick.AddListener(StartNewGame);
 
+        // disabling the submit button
+        submitButton.interactable = false;
     }
 
     // creating new game using elevensgame class:
@@ -55,7 +64,7 @@ public class GameManager : MonoBehavior
     {
         game = new ElevensGame();
         // should:
-        // clear board
+        ClearBoard();
         // update UI
         // create the card object
     }
@@ -74,19 +83,119 @@ public class GameManager : MonoBehavior
         cardControllers.Clear();
     }
 
-    private void CreateCardObject()
+    private void CreateCardObjects()
     {
+        List<Card> cardsInPlay = elevensGame.GameBoard.CardsInPlay;
 
+        for (int i = 0; i < cardsInPlay.Count; i++)
+        {
+            GameObject cardObject = Instantiate(cardPrefab, cardsContainer);
+            CardController cardController = cardObject.GetComponent<CardController>();
+
+            cardController.InitializeCard(cardsInPlay[i], i);
+            cardControllers.Add(cardController);
+
+            // positioning the card in a grid layout
+            PositionCardInGrid(cardObject.GetComponent<RectTransform>(), i);
+        }
     }
+
+    // for card position, made it a grid layout
+    private void PositionCardInGrid(RectTransform cardRect, int index)
+    {
+        int row = index / gridColumns;
+        int col = index % gridColumns;
+
+        float xPos = col * (cardWidth + cardSpacing);
+        float yPos = -row * (cardHeight + cardSpacing);
+
+        cardRect.anchoredPosition = new Vector2(xPos, yPos);
+        cardRect.sizeDelta = new Vector2(cardWidth, cardHeight);
+    }
+
+    // updating all the UI elements
     private void UpdateUI()
     {
-        // update score:
-        scoreText.text = "Score: " + game.score;
+        // uptdating score
+        scoreText.text = "Score: " + elevensGame.Score.ToString();
 
-        // update deck count
-        deckCountText.text = "Cards: " + game.deckCount;
+        // updating deck count
+        int remainingCards = elevensGame.GetRemainingCards();
+        deckCountText.text = "Cards: " + remainingCards.ToString();
 
-        // showing game over if needed:        
+        // shwoing game over when needed
+        gameOverPanel.SetActive(elevensGame.IsGameOver);
+
+        // to enable or desable submit button based on what was selected
+        submitButton.interactable = selectedPositions.Count == 2 || selectedPositions.Count == 3;
     }
 
+    // handling card selection
+    public void OnCardSelected(CardController cardController)
+    {
+        int position = cardController.GetBoardPosition();
+
+        if (selectedPositions.Contains(position))
+        {
+            // deselcting the card
+            selectedPositions.Remove(position);
+            cardController.ToggleSelection();
+        }
+        else
+        {
+            // if we already have 3 cards selected then deselect all first
+            if (selectedPositions.Count >= 3)
+            {
+                DeselectAllCards();
+            }
+
+            // selecting the card
+            selectedPositions.Add(position);
+            cardController.ToggleSelection();
+        }
+
+        UpdateUI();
+    }
+
+    // deselecting all cards
+    private void DeselectAllCards()
+    {
+        selectedPositions.Clear();
+
+        foreach (CardController card in cardControllers)
+        {
+            card.Deselect();
+        }
+    }
+
+    // handling the submit button
+    private void OnSubmitSelection()
+    {
+        if (elevensGame.MakeMove(selectedPositions))
+        {
+            // successful move and updating board
+            RefreshBoard();
+        }
+        else
+        {
+            // invalid move and making the cards deselected
+            DeselectAllCards();
+            UpdateUI();
+        }
+    }
+
+    // refreshing the board after a move
+    private void RefreshBoard()
+    {
+        ClearBoard();
+        CreateCardObjects();
+        UpdateUI();
+    }
+
+    // starting a new game
+    private void StartNewGame()
+    {
+        elevensGame.NewGame();
+        RefreshBoard();
+    }
 }

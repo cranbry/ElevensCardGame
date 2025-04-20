@@ -6,15 +6,15 @@ using TMPro;
 
 public class CardController : MonoBehaviour
 {
-    [SerializeField] private Image cardImage;
-    [SerializeField] private Sprite cardBackSprite;
-    [SerializeField] private Sprite[] cardSprites; // Array of all card sprites from your sprite sheet
-
+    [SerializeField] private Image cardFaceImage; // for the front face image
+    [SerializeField] private GameObject cardFaceObject; // GameObject containing the front face
+    [SerializeField] private GameObject cardBackObject; // GameObject containing the back face
+    [SerializeField] private Sprite[] cardSprites; // array of all card sprites
     private Card cardData;
     private int boardPosition;
     private bool isSelected = false;
 
-    // Initialize the card with its data and position
+    // initializing the card with its data and position
     public void InitializeCard(Card card, int position)
     {
         cardData = card;
@@ -22,19 +22,19 @@ public class CardController : MonoBehaviour
         UpdateCardVisuals();
     }
 
-    // Get the board position
+    // getting the board position
     public int GetBoardPosition()
     {
         return boardPosition;
     }
 
-    // Get the card data
+    // getting the card data
     public Card GetCardData()
     {
         return cardData;
     }
 
-    // Update visuals to match card data
+    // updating visuals to match card data
     public void UpdateCardVisuals()
     {
         if (cardData == null)
@@ -45,60 +45,55 @@ public class CardController : MonoBehaviour
 
         gameObject.SetActive(true);
 
+        // setting face up/down state by activating/deactivating GameObjects
+        cardFaceObject.SetActive(cardData.IsFaceUp);
+        cardBackObject.SetActive(!cardData.IsFaceUp);
+
         if (cardData.IsFaceUp)
         {
-            // Calculate sprite index based on suit and rank
-            // This assumes your sprite sheet is organized as shown in your screenshot
+            // calculating sprite index based on suit and rank
             int suitOffset = (int)cardData.Suit * 13;
             int rankIndex = (int)cardData.Rank;
             int spriteIndex = suitOffset + rankIndex;
 
-            // Make sure index is within bounds
+            // making sure index is within bounds
             if (spriteIndex >= 0 && spriteIndex < cardSprites.Length)
             {
-                cardImage.sprite = cardSprites[spriteIndex];
+                cardFaceImage.sprite = cardSprites[spriteIndex];
             }
-        }
-        else
-        {
-            // Show card back
-            cardImage.sprite = cardBackSprite;
         }
     }
 
-    // Toggle selection state
+    // selection state
     public void ToggleSelection()
     {
         isSelected = !isSelected;
 
-        // Visual effect for selection
+        // visual effect for selection
         if (isSelected)
         {
             transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-            cardImage.color = new Color(0.8f, 0.8f, 1f);
         }
         else
         {
             transform.localScale = Vector3.one;
-            cardImage.color = Color.white;
         }
     }
 
-    // Check if the card is selected
+    // checking if the card is selected
     public bool IsSelected()
     {
         return isSelected;
     }
 
-    // Deselect the card
+    // deselecting the card
     public void Deselect()
     {
         isSelected = false;
         transform.localScale = Vector3.one;
-        cardImage.color = Color.white;
     }
 
-    // Handle click event
+    // handling click event
     public void OnCardClick()
     {
         GameManager.Instance.OnCardSelected(this);

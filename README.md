@@ -48,12 +48,12 @@
 - Replace removed cards with new ones if deck is not empty.
   
 - ###Validate card selections:
--       Two cards summing to 11.
--       Three cards forming J-Q-K set.
--       Detect and handle game over and win conditions.
--       Display error messages for invalid selections.
--       Track and display score, remaining deck count, and selections.
--       Display winning message when board and deck are cleared.
+      - Two cards summing to 11.
+      - Three cards forming J-Q-K set.
+      - Detect and handle game over and win conditions.
+      - Display error messages for invalid selections.
+      - Track and display score, remaining deck count, and selections.
+      - Display winning message when board and deck are cleared.
 
 ##📐 UML Diagram (Made with Figma):
 

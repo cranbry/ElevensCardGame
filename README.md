@@ -9,7 +9,7 @@
 ### The game ends when there are no more valid combinations on the board, and the deck is empty. The player wins by clearing all cards from both the board and the deck.
 
 ## ✅ What is included in this complete implementation?
-   Full class design for: Suit, Rank, Card, Deck, Board, and ElevensGame.
+   Full class design for: Suit, Rank, Card, Deck, Board, CardController, GameManager and ElevensGame.
 
 ###Core gameplay logic:
 
@@ -35,7 +35,7 @@
 
 ##🧑‍💻 User Functional Requirements:
 
-- View 9-card game board and current deck count.
+- View 8-card game board and current deck count.
 - Select and deselect cards to form valid combinations.
 - Automatically replace cleared cards with new ones from the deck.
 - Get feedback for invalid selections.
@@ -46,15 +46,14 @@
 
 - Deal 9 random cards to the board at game start.
 - Replace removed cards with new ones if deck is not empty.
-- 
-###Validate card selections:
-
-- Two cards summing to 11.
-- Three cards forming J-Q-K set.
-- Detect and handle game over and win conditions.
-- Display error messages for invalid selections.
-- Track and display score, remaining deck count, and selections.
-- Display winning message when board and deck are cleared.
+  
+- ###Validate card selections:
+-       Two cards summing to 11.
+-       Three cards forming J-Q-K set.
+-       Detect and handle game over and win conditions.
+-       Display error messages for invalid selections.
+-       Track and display score, remaining deck count, and selections.
+-       Display winning message when board and deck are cleared.
 
 ##📐 UML Diagram (Made with Figma):
 

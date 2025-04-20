@@ -11,7 +11,7 @@
 ## ✅ What is included in this complete implementation?
    Full class design for: Suit, Rank, Card, Deck, Board, CardController, GameManager and ElevensGame.
 
-###Core gameplay logic:
+### Core gameplay logic:
 
 - Card shuffling and dealing.
 - Move validation (checkForSum, checkForJQK, etc.).
@@ -25,7 +25,7 @@
 - Game-over and win messages.
 - Button controls for submitting selections and starting a new game.
 
-##👥 Key Stakeholders:
+## 👥 Key Stakeholders:
 
 - End-user: Anyone looking for a fun, casual card game that offers light math and pattern-recognition challenges.
 
@@ -33,7 +33,7 @@
 
 - Operators: Same as end-users — this game is self-contained and user-operated.
 
-##🧑‍💻 User Functional Requirements:
+## 🧑‍💻 User Functional Requirements:
 
 - View 8-card game board and current deck count.
 - Select and deselect cards to form valid combinations.
@@ -42,12 +42,12 @@
 - Restart the game at any time.
 - Win or lose messages displayed appropriately.
 
-##⚙️ System Functional Requirements:
+## ⚙️ System Functional Requirements:
 
 - Deal 9 random cards to the board at game start.
 - Replace removed cards with new ones if deck is not empty.
   
-- ###Validate card selections:
+- ### Validate card selections:
       - Two cards summing to 11.
       - Three cards forming J-Q-K set.
       - Detect and handle game over and win conditions.
@@ -55,6 +55,6 @@
       - Track and display score, remaining deck count, and selections.
       - Display winning message when board and deck are cleared.
 
-##📐 UML Diagram (Made with Figma):
+## 📐 UML Diagram (Made with Figma):
 
 <img width="710" alt="Screenshot 2025-03-22 at 10 22 54 AM" src="https://github.com/user-attachments/assets/64ec1035-5e37-4b4d-b28a-c3d7c2e11bb8" />

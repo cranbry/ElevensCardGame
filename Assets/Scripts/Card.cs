@@ -40,12 +40,12 @@ public class Card
     // get the value of the card
     public int GetValue()
     {
-        int rankValue = (int)rank;
-
-        if (rankValue >= (int)global::Rank.Jack) // for Jack, Queen, and King // had to add explicit cast to int for comparison
+        if (rank == Rank.Jack || rank == Rank.Queen || rank == Rank.King) // for Jack, Queen, and King // had to add explicit cast to int for comparison
             return 10;
-
-        return rankValue + 1; // ace = 1, two = 2...
+        else if (rank == Rank.Ace)
+            return 1;
+        else
+            return (int)rank + 1;   // ace = 1, two = 2...
     }
 
     public void FlipOver()

@@ -1,9 +1,10 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class Board
 {
-    private const int NUM_CARDS_IN_PLAY = 9;
+    private const int NUM_CARDS_IN_PLAY = 8;
     private const int PAIR_SUM = 11;
 
     private List<Card> cardsInPlay = new List<Card>();
@@ -84,7 +85,11 @@ public class Board
         Card firstCard = cardsInPlay[firstPosition];
         Card secondCard = cardsInPlay[secondPosition];
 
-        return firstCard.GetValue() + secondCard.GetValue() == PAIR_SUM;
+        int sum = firstCard.GetValue() + secondCard.GetValue();
+
+        Debug.Log($"Checking sum: {firstCard.Rank} ({firstCard.GetValue()}) + {secondCard.Rank} ({secondCard.GetValue()}) = {sum}");
+
+        return sum == PAIR_SUM;
     }
 
     // checking if the selected positions are JQK 

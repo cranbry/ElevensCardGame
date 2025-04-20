@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
 
     // Card layout parameters
     [Header("Card Layout")]
-    [SerializeField] private float cardWidth = 120f;
-    [SerializeField] private float cardHeight = 180f;
-    [SerializeField] private float cardSpacing = 10f;
-    [SerializeField] private int gridColumns = 3;
+    [SerializeField] private float cardWidth;
+    [SerializeField] private float cardHeight;
+    [SerializeField] private float cardSpacing;
+    [SerializeField] private int gridColumns;
 
     private ElevensGame elevensGame;
     private List<CardController> cardControllers = new List<CardController>();
@@ -88,18 +88,29 @@ public class GameManager : MonoBehaviour
             cardControllers.Add(cardController);
 
             // position the card in a grid layout
-            PositionCardInGrid(cardObject.GetComponent<RectTransform>(), i);
+            PositionCardInGrid(cardObject.GetComponent<RectTransform>(), i, cardsInPlay.Count);
+
         }
     }
 
     // position a card in the grid layout
-    private void PositionCardInGrid(RectTransform cardRect, int index)
+    private void PositionCardInGrid(RectTransform cardRect, int index, int totalCards)
     {
         int row = index / gridColumns;
         int col = index % gridColumns;
 
-        float xPos = col * (cardWidth + cardSpacing);
-        float yPos = -row * (cardHeight + cardSpacing);
+        // Calculate the total grid width and height
+        float totalGridWidth = gridColumns * (cardWidth + cardSpacing) - cardSpacing;
+        float totalGridHeight = ((totalCards - 1) / gridColumns + 1) * (cardHeight + cardSpacing) - cardSpacing;
+
+        // Calculate starting position (top-left of grid)
+        // This centers the entire grid within the container
+        float startX = -totalGridWidth / 2 + cardWidth / 2;
+        float startY = totalGridHeight / 2 - cardHeight / 2;
+
+        // Calculate position for this specific card
+        float xPos = startX + col * (cardWidth + cardSpacing);
+        float yPos = startY - row * (cardHeight + cardSpacing);
 
         cardRect.anchoredPosition = new Vector2(xPos, yPos);
         cardRect.sizeDelta = new Vector2(cardWidth, cardHeight);
@@ -163,14 +174,23 @@ public class GameManager : MonoBehaviour
     // handling submit button click
     private void OnSubmitSelection()
     {
+        Debug.Log($"Submit pressed with {selectedPositions.Count} cards selected");
+
+        // printing the selected cards for debugging
+        foreach (int pos in selectedPositions)
+        {
+            Card card = elevensGame.GameBoard.CardsInPlay[pos];
+            Debug.Log($"Selected card: {card.Rank} of {card.Suit} with value {card.GetValue()}");
+        }
+
         if (elevensGame.MakeMove(selectedPositions))
         {
-            // Move was successful -> updating the board
+            Debug.Log("Valid move!");
             RefreshBoard();
         }
         else
         {
-            // move was invalid move -> deselecting
+            Debug.Log("Invalid move!");
             DeselectAllCards();
             UpdateUI();
         }

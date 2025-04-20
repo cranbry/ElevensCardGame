@@ -19,6 +19,7 @@ public class CardController : MonoBehaviour
     {
         cardData = card;
         boardPosition = position;
+        Debug.Log($"Card at position {position}: {card.Rank} of {card.Suit} (Value: {card.GetValue()})");
         UpdateCardVisuals();
     }
 
@@ -55,6 +56,8 @@ public class CardController : MonoBehaviour
             int suitOffset = (int)cardData.Suit * 13;
             int rankIndex = (int)cardData.Rank;
             int spriteIndex = suitOffset + rankIndex;
+
+            Debug.Log($"For {cardData.Rank} of {cardData.Suit} using sprite index: {spriteIndex}");
 
             // making sure index is within bounds
             if (spriteIndex >= 0 && spriteIndex < cardSprites.Length)

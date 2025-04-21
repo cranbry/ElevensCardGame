@@ -1175,9 +1175,9 @@ MonoBehaviour:
   scoreText: {fileID: 50848560}
   deckCountText: {fileID: 596173689}
   gameOverPanel: {fileID: 2006139597}
-  restartButton: {fileID: 0}
   submitButton: {fileID: 431436549}
   newGameButton: {fileID: 1889674901}
+  restartButton: {fileID: 1777213716}
   cardWidth: 40
   cardHeight: 40
   cardSpacing: 115
@@ -1938,8 +1938,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2007,7 +2007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2006139598
 RectTransform:
   m_ObjectHideFlags: 0

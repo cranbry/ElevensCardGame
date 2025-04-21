@@ -5,6 +5,7 @@
    -  Add up to 11 (using two cards), or
 
    - Include a Jack, Queen, and King (as a set of three).
+
 Link: https://youtu.be/X6Hc_NICcmQ
 
 ### The game ends when there are no more valid combinations on the board, and the deck is empty. The player wins by clearing all cards from both the board and the deck.

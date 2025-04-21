@@ -50,13 +50,23 @@ public class ElevensGame
         }
         if (gameBoard.IsValidSelection(selectedPositions))
         {
-            // when valid move then remove and replace the card and update score
+            // checking if JQK set
+            bool isJQKSet = false;
+            if (selectedPositions.Count == 3)
+            {
+                isJQKSet = gameBoard.IsJQKSet(selectedPositions);
+            }
+
+            // removing and replacing cards
             gameBoard.RemoveAndReplace(selectedPositions);
 
-            // update score +1 point
-            score++;
+            // update score only if not JQK set
+            if (!isJQKSet)
+            {
+                score++;
+            }
 
-            // checking if game is over
+            // checking if game is over after move
             isGameOver = gameBoard.IsGameOver();
 
             return true;

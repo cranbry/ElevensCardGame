@@ -27,7 +27,7 @@ public class Board
     // prop to get remaining cards in deck
     public int RemainingCards
     {
-        get { return deck.RemainingCards; } // accessing cards property ->> was issue DONT FORGET TO CHANGE
+        get { return deck.RemainingCards; }
     }
 
     // dealing initial cards to the board
@@ -44,6 +44,9 @@ public class Board
             {
                 card.FlipOver(); // making cards face up when on the board
                 cardsInPlay.Add(card);
+
+            } else if (deck.RemainingCards == 0) {
+                break;
             }
         }
     }
